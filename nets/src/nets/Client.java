@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-class Sockets_Client
+class Client
 {
 
     static String OUTPUT = "";
@@ -19,7 +19,9 @@ class Sockets_Client
             Scanner userInput = new Scanner(System.in);
 
             //Creates the initial socket to be used
-            Socket clientSocket = new Socket("192.168.100.108", 7315);	//changed host to localhost
+            //Socket clientSocket = new Socket("192.168.100.108", 7315);	//changed host to localhost
+            Socket clientSocket = new Socket("localhost", 7315);	//changed host to localhost
+            
 
             //writing user statements to server side program
             PrintWriter outputStream = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -49,7 +51,7 @@ class Sockets_Client
 
                 switch(userChoice)
                 {
-                     case 1:
+                    case 1:
                     case 2:
                     case 3:
                     case 4:
@@ -59,20 +61,23 @@ class Sockets_Client
                     System.out.println("Enter Number of Clients To Simulate:");
                     //Get number of threads
                     num = userInput.nextInt();
+                    break;
                 }
+                	
                     case 7:
                 {
                     System.out.println("Program is exiting. No longer connected to server.");
+                    break;
                 }
                     default:
                 {
                     System.out.println("Invalid Input. Please enter a number from 1 to 7.");
+                    break;
                 }
                 }
                    
 
-                if (userChoice.equals(1) || userChoice.equals(2) || userChoice.equals(3) || userChoice.equals(4)
-                        || userChoice.equals(5) || userChoice.equals(6))
+                if (userChoice <7 )
                 {
 
                     threadTime time = new threadTime(num);
@@ -133,6 +138,9 @@ class Sockets_Client
                 }
                 else
                 {
+
+                    System.out.println("said " +userChoice);
+                
                     System.out.println("Invalid Input");
                 }
             }
@@ -151,11 +159,11 @@ class ClientThreads extends Thread
 
     private PrintWriter outputStream;
     private BufferedReader inputStream;
-    private String choice;
+    private int choice;
     private threadTime time;
     private String allResults;
 
-    public ClientThreads(PrintWriter os, BufferedReader is, String c, threadTime t)
+    public ClientThreads(PrintWriter os, BufferedReader is, int c, threadTime t)
     {
         this.outputStream = os;
         this.inputStream = is;
@@ -183,7 +191,7 @@ class ClientThreads extends Thread
         try
         {
             String allResults = inputStream.readLine();
-            Sockets_Client.OUTPUT = allResults;
+            Client.OUTPUT = allResults;
             endTime = System.currentTimeMillis();
             totalTime = endTime - startTime;
             time.push(totalTime);

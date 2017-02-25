@@ -11,7 +11,7 @@ import java.lang.management.RuntimeMXBean;
  *
  * @author Group4
  */
-public class ServerTemp
+public class Server
 {
 
     public static void main(String[] args) throws IOException
