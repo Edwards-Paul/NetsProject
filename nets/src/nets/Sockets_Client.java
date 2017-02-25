@@ -19,8 +19,12 @@ class Sockets_Client
          Scanner numThreads = new Scanner(System.in);
          
       	//Create the Socket
-         Socket clientSocket = new Socket("192.168.100.108", 7315);	//changed host to localhost
-      	
+        // Socket clientSocket = new Socket("192.168.100.108", 7315);	//changed host to localhost
+       Socket clientSocket = new Socket("localhost", 7315);	//changed host to localhost
+       	
+         
+         
+         
       	//Stream to send user input to the server
          PrintWriter outputStream = new PrintWriter(clientSocket.getOutputStream(), true);
       	
@@ -99,7 +103,9 @@ class Sockets_Client
                               System.out.println(OUTPUT);
                               check = false;
                            }
-   	   						System.out.println("Average time of " + counter + " thread(s): " + avgTime);
+   	   						//System.out.println("Average time of " + counter + " thread(s): " + avgTime);
+                        System.out.println(counter + "\t" + avgTime );
+  	   						
    	   					}
    				      }
             }else if(userChoice.equals("7")) {

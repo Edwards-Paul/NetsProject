@@ -1,6 +1,5 @@
 package nets;
 
-
 import java.util.*;
 import java.net.*;
 import java.text.SimpleDateFormat;
@@ -117,7 +116,7 @@ public class ServerTemp
 					long used  = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 					
 					//sends the output to the client
-					out.println("Total Memory: " + total + "\nUsed Memory: " + used);
+					out.println("Total Memory: " + total + "Used Memory: " + used);
 					
 					break;
 		
