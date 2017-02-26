@@ -220,9 +220,17 @@ class ClientThreads extends Thread
         try
         {
         	
-           String allResults = inputStream.readLine();
+          // String allResults = inputStream.readLine();
         	
-        	System.out.println(allResults);
+        	String allResults = inputStream.readLine();
+           String strArray[] = allResults.split(";");
+           
+           for(int i=0;i<strArray.length;i++)
+           {
+               System.out.println(strArray[i]);
+           }
+           
+        	//System.out.println(allResults);
         	
             //Client.OUTPUT = allResults;
         	

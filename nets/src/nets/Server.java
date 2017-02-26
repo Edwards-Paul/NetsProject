@@ -123,12 +123,14 @@ public class Server
                     //stores the output into a string
                     while ((line = bufferedReader.readLine()) != null)
                     {
-                        output = output + line;
+                        output = output +";"+ line;
                     }
 
                     //sends the output to the client
                     out.println(output);
 
+                    output = "";
+                    
                     break;
 
                 //Host's current users	
@@ -149,13 +151,14 @@ public class Server
                     //stores the output into a string
                     while ((line = stdInp.readLine()) != null)
                     {
-                        output = output + line;
+                        output = output + ";" + line;
                     }
 
                     //sends the output to the client
                     out.println(output);
-                    System.out.println(output);
-
+                    
+                    output="";
+                    
                     break;
 
                 //Host's running processes	
@@ -174,12 +177,13 @@ public class Server
                     //stores the output into a string
                     while ((line = stdInp.readLine()) != null)
                     {
-                        output = output + line;
+                        output = output + ";" + line;
                     }
 
                     //sends the output to the client
                     out.println(output);
-
+                    
+                    output="";
                     break;
             }
 
