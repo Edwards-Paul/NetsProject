@@ -16,7 +16,7 @@ public class Server
 
     public static void main(String[] args) throws IOException
     {
-        int portNum = 7315;
+        int portNum = 9999;
 
         //creating a new server socket
         ServerSocket serverSocket = null;
@@ -107,7 +107,7 @@ public class Server
                     long used = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
                     //sends the output to the client
-                    out.println("Total Memory: " + total + "\nUsed Memory: " + used);
+                    out.println("Total Memory: " + total + ", Used Memory: " + used);
 
                     break;
 
@@ -136,12 +136,15 @@ public class Server
                     System.out.printf("Forking thread: Server's current users%n");
 
                     //creates a process for current users
-                    someRuntime = Runtime.getRuntime();
+                    /*someRuntime = Runtime.getRuntime();
                     cmd = "w";
-
+                     */
+                    
+                    Process process1 = Runtime.getRuntime().exec("w");
+                    
                     //runs the process, gets the ouptut,and prints it on the client side
-                    someProcess = someRuntime.exec(cmd);
-                    stdInp = new BufferedReader(new InputStreamReader(someProcess.getInputStream()));
+                //    someProcess = someRuntime.exec(cmd);
+                    stdInp = new BufferedReader(new InputStreamReader(process1.getInputStream()));
 
                     //stores the output into a string
                     while ((line = stdInp.readLine()) != null)
@@ -150,7 +153,7 @@ public class Server
                     }
 
                     //sends the output to the client
-                    out.print(output);
+                    out.println(output);
                     System.out.println(output);
 
                     break;

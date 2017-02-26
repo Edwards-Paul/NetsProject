@@ -2,6 +2,7 @@ package nets;
 
 import java.io.*;
 import java.net.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Client
@@ -11,16 +12,18 @@ class Client
 
     public static void main(String[] args) throws Exception
     {
-        if (args.length >= 0)
+        if (args.length > 0)
         {
-            // String host = args[0];
+            String host = args[0];
 
             //Setting up Scanners to get user's inputs
             Scanner userInput = new Scanner(System.in);
 
-            //Creates the initial socket to be used
-            //Socket clientSocket = new Socket("192.168.100.108", 7315);	//changed host to localhost
-            Socket clientSocket = new Socket("localhost", 7315);	//changed host to localhost
+            //Initial hostname... these wont be used in demo
+            //Socket clientSocket = new Socket("192.168.100.108", 9999);	
+            //Socket clientSocket = new Socket("localhost", 9999);	
+            
+            Socket clientSocket = new Socket(args[0], 9999);	
             
 
             //writing user statements to server side program
@@ -47,8 +50,28 @@ class Client
                         + "7. Quit%n");
 
                 //get user menu decision
-                userChoice = userInput.nextInt();
-
+               
+               Scanner sc = new Scanner(System.in);
+               
+                
+               for (;;) {
+                   if (!sc.hasNextInt()) {
+                       System.out.println("ERROR: Only input 1-7. ");
+                       sc.next(); // discard
+                       continue;
+                   }
+                   userChoice = sc.nextInt();
+                   if (userChoice >= 0 && userChoice <8) {
+                	//input ok   
+                   } 
+                   else {
+                       System.out.print("ERROR: Only input 1-7.");
+                       
+                   }
+               break;
+             }
+               
+               
                 switch(userChoice)
                 {
                     case 1:
@@ -58,9 +81,9 @@ class Client
                     case 5:
                     case 6:
                 {
-                    System.out.println("Enter Number of Clients To Simulate:");
+                   // System.out.println("Enter Number of Clients To Simulate:");
                     //Get number of threads
-                    num = userInput.nextInt();
+                   // num = userInput.nextInt();
                     break;
                 }
                 	
@@ -109,15 +132,19 @@ class Client
 
                         counter = i + 1;
 
-                        if (num == 1)
+                        /*
+                        if (num = 1)
                         {
-
+                        	 System.out.println("doing this");
                             System.out.println(thread[i].getResults());
+                            System.out.println("num " + num + "i " + i);
                         }
+                        */
+                        
                         if ((counter % 5 == 0) || (counter == 1))
                         {
 
-                            avgTime = time.getAverage(counter);
+                       	    avgTime = time.getAverage(counter);
 
                             if (check)
                             {
@@ -125,7 +152,7 @@ class Client
                                 System.out.println(OUTPUT);
                                 check = false;
                             }
-                            System.out.println("Average time of " + counter + " thread(s): " + avgTime);
+                            //System.out.println(counter + "\t" + avgTime);
                         }
                     }
                 }
@@ -136,11 +163,12 @@ class Client
                     System.exit(0);
                     break;
                 }
+                
+              
+                
                 else
                 {
 
-                    System.out.println("said " +userChoice);
-                
                     System.out.println("Invalid Input");
                 }
             }
@@ -149,7 +177,8 @@ class Client
         }
         else
         {
-            System.out.println("Please enter a server to connect to.");
+            System.out.println("ERROR: Must enter hostname as command line argument. \n\n\t ===Closing===");
+	        System.exit(0);
         }
     }
 }
@@ -190,12 +219,18 @@ class ClientThreads extends Thread
 
         try
         {
-            String allResults = inputStream.readLine();
-            Client.OUTPUT = allResults;
+        	
+           String allResults = inputStream.readLine();
+        	
+        	System.out.println(allResults);
+        	
+            //Client.OUTPUT = allResults;
+        	
             endTime = System.currentTimeMillis();
             totalTime = endTime - startTime;
-            time.push(totalTime);
-        }
+           time.push(totalTime);
+        	
+        	}
         catch (IOException e)
         {
             System.out.println(e);
