@@ -137,11 +137,7 @@ public class Server
                 case 5:
                     System.out.printf("Forking thread: Server's current users%n");
 
-                    //creates a process for current users
-                    /*someRuntime = Runtime.getRuntime();
-                    cmd = "w";
-                     */
-                    
+                   
                     Process process1 = Runtime.getRuntime().exec("w");
                     
                     //runs the process, gets the ouptut,and prints it on the client side

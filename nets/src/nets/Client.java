@@ -81,9 +81,9 @@ class Client
                     case 5:
                     case 6:
                 {
-                   // System.out.println("Enter Number of Clients To Simulate:");
+                    System.out.println("Enter Number of Clients To Simulate:");
                     //Get number of threads
-                   // num = userInput.nextInt();
+                    num = userInput.nextInt();
                     break;
                 }
                 	
@@ -132,14 +132,14 @@ class Client
 
                         counter = i + 1;
 
-                        /*
-                        if (num = 1)
+                        
+                        if (num == 1)
                         {
-                        	 System.out.println("doing this");
+                        	
                             System.out.println(thread[i].getResults());
                             System.out.println("num " + num + "i " + i);
                         }
-                        */
+                        
                         
                         if ((counter % 5 == 0) || (counter == 1))
                         {
@@ -152,7 +152,7 @@ class Client
                                 System.out.println(OUTPUT);
                                 check = false;
                             }
-                            //System.out.println(counter + "\t" + avgTime);
+                            System.out.println(counter + "\t" + avgTime);
                         }
                     }
                 }
@@ -219,9 +219,6 @@ class ClientThreads extends Thread
 
         try
         {
-        	
-          // String allResults = inputStream.readLine();
-        	
         	String allResults = inputStream.readLine();
            String strArray[] = allResults.split(";");
            
