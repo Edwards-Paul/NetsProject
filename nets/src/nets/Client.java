@@ -133,12 +133,12 @@ class Client
                         counter = i + 1;
 
                         
-                        if (num == 1)
+                       /* if (num == 1)
                         {
                         	
                             System.out.println(thread[i].getResults());
                             System.out.println("num " + num + "i " + i);
-                        }
+                         }*/
                         
                         
                         if ((counter % 5 == 0) || (counter == 1))
@@ -149,10 +149,10 @@ class Client
                             if (check)
                             {
 
-                                System.out.println(OUTPUT);
+                              System.out.println(OUTPUT);
                                 check = false;
                             }
-                            System.out.println(counter + "\t" + avgTime);
+                            System.out.println("Time for " + counter + " client(s): \t" + avgTime + " ms.");
                         }
                     }
                 }
@@ -233,7 +233,7 @@ class ClientThreads extends Thread
         	
             endTime = System.currentTimeMillis();
             totalTime = endTime - startTime;
-           time.push(totalTime);
+            time.push(totalTime);
         	
         	}
         catch (IOException e)

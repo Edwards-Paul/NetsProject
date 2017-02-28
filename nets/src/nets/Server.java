@@ -89,27 +89,62 @@ public class Server
 
                 //Host uptime	
                 case 2:
-                    System.out.printf("Forking thread: Host's uptime%n");
+                  /*  System.out.printf("Forking thread: Host's uptime%n");
                     //-----UPTIME
 
                     RuntimeMXBean mxBean = ManagementFactory.getRuntimeMXBean();
 
                     out.println("Host uptime: " + mxBean.getUptime());
 
-                    //----/UPTIME
+                   *///----/UPTIME
+                    
+                	System.out.printf("Forking thread: Server's uptime:%n");
+
+                    
+                    Process uptimeProcess = Runtime.getRuntime().exec("uptime");
+                    
+                    //runs the process, gets the ouptut,and prints it on the client side
+                //    someProcess = someRuntime.exec(cmd);
+                    stdInp = new BufferedReader(new InputStreamReader(uptimeProcess.getInputStream()));
+
+                    //stores the output into a string
+                    while ((line = stdInp.readLine()) != null)
+                    {
+                        output = output + ";" + line;
+                    }
+
+                    //sends the output to the client
+                    out.println(output);
+                    
+                    output="";	//reset output
+                    
                     break;
+                	
 
                 //Host memory use					
                 case 3:
                     System.out.printf("Forking thread: Server's memory usage%n");
 
-                    long total = Runtime.getRuntime().totalMemory();
-                    long used = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+                    
+                    Process memProcess = Runtime.getRuntime().exec("free");
+                    
+                    //runs the process, gets the ouptut,and prints it on the client side
+                //    someProcess = someRuntime.exec(cmd);
+                    stdInp = new BufferedReader(new InputStreamReader(memProcess.getInputStream()));
+
+                    //stores the output into a string
+                    while ((line = stdInp.readLine()) != null)
+                    {
+                        output = output + ";" + line;
+                    }
 
                     //sends the output to the client
-                    out.println("Total Memory: " + total + ", Used Memory: " + used);
-
+                    out.println(output);
+                    
+                    output="";	//reset output
+                    
                     break;
+                    
 
                 //Host Netstat					
                 case 4:
@@ -129,7 +164,7 @@ public class Server
                     //sends the output to the client
                     out.println(output);
 
-                    output = "";
+                    output = "";	//reset output
                     
                     break;
 
@@ -138,11 +173,11 @@ public class Server
                     System.out.printf("Forking thread: Server's current users%n");
 
                    
-                    Process process1 = Runtime.getRuntime().exec("w");
+                    Process userProcess = Runtime.getRuntime().exec("w");
                     
                     //runs the process, gets the ouptut,and prints it on the client side
                 //    someProcess = someRuntime.exec(cmd);
-                    stdInp = new BufferedReader(new InputStreamReader(process1.getInputStream()));
+                    stdInp = new BufferedReader(new InputStreamReader(userProcess.getInputStream()));
 
                     //stores the output into a string
                     while ((line = stdInp.readLine()) != null)
@@ -153,7 +188,7 @@ public class Server
                     //sends the output to the client
                     out.println(output);
                     
-                    output="";
+                    output="";	//reset output
                     
                     break;
 
