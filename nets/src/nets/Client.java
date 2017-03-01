@@ -1,3 +1,12 @@
+/**
+ * CNT 4504 - Project 1: Client
+ * @author Group4
+ * Paul Edwards
+ * Brennan Hinck
+ * Molly Johnson
+ * Whitley Turner
+ * Brandon Magaro
+ */
 package nets;
 
 import java.io.*;
@@ -12,7 +21,7 @@ class Client
 
     public static void main(String[] args) throws Exception
     {
-        if (args.length > 0)
+        if (args.length > 0) //if java command passes in argument for host address
         {
             String host = args[0];
 

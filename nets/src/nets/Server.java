@@ -1,7 +1,7 @@
 /**
- *
+ * CNT 4504 - Project 1: Server
  * @author Group4
- * Paul
+ * Paul Edwards
  * Brennan Hinck
  * Molly Johnson
  * Whitley Turner
