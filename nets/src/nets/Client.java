@@ -22,9 +22,7 @@ class Client
             //Initial hostname... these wont be used in demo
             //Socket clientSocket = new Socket("192.168.100.108", 9999);	
             //Socket clientSocket = new Socket("localhost", 9999);	
-            
-            Socket clientSocket = new Socket(args[0], 9999);	
-            
+            Socket clientSocket = new Socket(args[0], 9999);
 
             //writing user statements to server side program
             PrintWriter outputStream = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -50,29 +48,30 @@ class Client
                         + "7. Quit%n");
 
                 //get user menu decision
-               
-               Scanner sc = new Scanner(System.in);
-               
-                
-               for (;;) {
-                   if (!sc.hasNextInt()) {
-                       System.out.println("ERROR: Only input 1-7. ");
-                       sc.next(); // discard
-                       continue;
-                   }
-                   userChoice = sc.nextInt();
-                   if (userChoice >= 0 && userChoice <8) {
-                	//input ok   
-                   } 
-                   else {
-                       System.out.print("ERROR: Only input 1-7.");
-                       
-                   }
-               break;
-             }
-               
-               
-                switch(userChoice)
+                Scanner sc = new Scanner(System.in);
+
+                for (;;)
+                {
+                    if (!sc.hasNextInt())
+                    {
+                        System.out.println("ERROR: Only input 1-7. ");
+                        sc.next(); // discard
+                        continue;
+                    }
+                    userChoice = sc.nextInt();
+                    if (userChoice >= 0 && userChoice < 8)
+                    {
+                        //input ok   
+                    }
+                    else
+                    {
+                        System.out.print("ERROR: Only input 1-7.");
+
+                    }
+                    break;
+                }
+
+                switch (userChoice)
                 {
                     case 1:
                     case 2:
@@ -80,27 +79,34 @@ class Client
                     case 4:
                     case 5:
                     case 6:
-                {
-                    System.out.println("Enter Number of Clients To Simulate:");
-                    //Get number of threads
-                    num = userInput.nextInt();
-                    break;
-                }
-                	
-                    case 7:
-                {
-                    System.out.println("Program is exiting. No longer connected to server.");
-                    break;
-                }
-                    default:
-                {
-                    System.out.println("Invalid Input. Please enter a number from 1 to 7.");
-                    break;
-                }
-                }
-                   
+                    {
+                        System.out.println("Enter Number of Clients To Simulate:");
+                        //Get number of threads
+                        num = userInput.nextInt();
+                        
+                        //while loop for error checking
+                        while (num <= 0 || num > 100)
+                        {
+                            System.out.printf("ERROR: %d is an invalid number, "
+                                    + "please enter a number between 1-100!%n", num);
+                            num = userInput.nextInt();
+                        }
+                        break;
+                    }
 
-                if (userChoice <7 )
+                    case 7:
+                    {
+                        System.out.println("Program is exiting. No longer connected to server.");
+                        break;
+                    }
+                    default:
+                    {
+                        System.out.println("Invalid Input. Please enter a number from 1 to 7.");
+                        break;
+                    }
+                }
+
+                if (userChoice < 7)
                 {
 
                     threadTime time = new threadTime(num);
@@ -132,24 +138,21 @@ class Client
 
                         counter = i + 1;
 
-                        
-                       /* if (num == 1)
+                        /* if (num == 1)
                         {
                         	
                             System.out.println(thread[i].getResults());
                             System.out.println("num " + num + "i " + i);
                          }*/
-                        
-                        
                         if ((counter % 5 == 0) || (counter == 1))
                         {
 
-                       	    avgTime = time.getAverage(counter);
+                            avgTime = time.getAverage(counter);
 
                             if (check)
                             {
 
-                              System.out.println(OUTPUT);
+                                System.out.println(OUTPUT);
                                 check = false;
                             }
                             System.out.println("Time for " + counter + " client(s): \t" + avgTime + " ms.");
@@ -163,9 +166,7 @@ class Client
                     System.exit(0);
                     break;
                 }
-                
-              
-                
+
                 else
                 {
 
@@ -178,7 +179,7 @@ class Client
         else
         {
             System.out.println("ERROR: Must enter hostname as command line argument. \n\n\t ===Closing===");
-	        System.exit(0);
+            System.exit(0);
         }
     }
 }
@@ -219,23 +220,21 @@ class ClientThreads extends Thread
 
         try
         {
-        	String allResults = inputStream.readLine();
-           String strArray[] = allResults.split(";");
-           
-           for(int i=0;i<strArray.length;i++)
-           {
-               System.out.println(strArray[i]);
-           }
-           
-        	//System.out.println(allResults);
-        	
+            String allResults = inputStream.readLine();
+            String strArray[] = allResults.split(";");
+
+            for (int i = 0; i < strArray.length; i++)
+            {
+                System.out.println(strArray[i]);
+            }
+
+            //System.out.println(allResults);
             //Client.OUTPUT = allResults;
-        	
             endTime = System.currentTimeMillis();
             totalTime = endTime - startTime;
             time.push(totalTime);
-        	
-        	}
+
+        }
         catch (IOException e)
         {
             System.out.println(e);
