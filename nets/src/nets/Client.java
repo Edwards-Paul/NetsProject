@@ -70,7 +70,7 @@ class Client
                     }
                     break;
                 }
-
+                //switch statement used for validation, walking through program
                 switch (userChoice)
                 {
                     case 1:
@@ -83,8 +83,8 @@ class Client
                         System.out.println("Enter Number of Clients To Simulate:");
                         //Get number of threads
                         num = userInput.nextInt();
-                        
-                        //while loop for error checking
+
+                        //while loop for error checking number of clients
                         while (num <= 0 || num > 100)
                         {
                             System.out.printf("ERROR: %d is an invalid number, "
@@ -94,11 +94,13 @@ class Client
                         break;
                     }
 
+                    //if user enters 7
                     case 7:
                     {
                         System.out.println("Program is exiting. No longer connected to server.");
                         break;
                     }
+                    //if invalid request selected
                     default:
                     {
                         System.out.println("Invalid Input. Please enter a number from 1 to 7.");
@@ -106,16 +108,19 @@ class Client
                     }
                 }
 
+                //if the users decision is options 1-6, client threads
                 if (userChoice < 7)
                 {
 
+                    //generates new thread time for forking and generates a array for client threads
                     threadTime time = new threadTime(num);
                     ClientThreads thread[] = new ClientThreads[100];
 
+                    //FOR LOOP for all the clients requested
                     for (int i = 0; i < num; i++)
                     {
 
-                        // Creates a new thread
+                        // Creates a new thread with requirements to interact with server
                         thread[i] = new ClientThreads(outputStream, inputStream, userChoice, time);
                         thread[i].start();
 
@@ -138,12 +143,7 @@ class Client
 
                         counter = i + 1;
 
-                        /* if (num == 1)
-                        {
-                        	
-                            System.out.println(thread[i].getResults());
-                            System.out.println("num " + num + "i " + i);
-                         }*/
+                        //if the counter is a modulus of 5 or equals 1, find the average time and print to client
                         if ((counter % 5 == 0) || (counter == 1))
                         {
 
@@ -159,6 +159,7 @@ class Client
                         }
                     }
                 }
+                //if user chooses to exit the program
                 else if (userChoice == 7)
                 {
 
@@ -174,9 +175,9 @@ class Client
                 }
             }
 
-            clientSocket.close();
+            clientSocket.close(); //closes socket created by the client
         }
-        else
+        else //invalid hostname input
         {
             System.out.println("ERROR: Must enter hostname as command line argument. \n\n\t ===Closing===");
             System.exit(0);
@@ -184,6 +185,9 @@ class Client
     }
 }
 
+/*
+* Class for client threading
+*/
 class ClientThreads extends Thread
 {
 
@@ -193,6 +197,7 @@ class ClientThreads extends Thread
     private threadTime time;
     private String allResults;
 
+    //client thread constructor
     public ClientThreads(PrintWriter os, BufferedReader is, int c, threadTime t)
     {
         this.outputStream = os;
@@ -201,13 +206,16 @@ class ClientThreads extends Thread
         this.time = t;
     }
 
+    /*
+    * run method for finding the client times
+    */
     public void run()
     {
         long totalTime;
         long startTime;
         long endTime;
 
-        startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis(); //returns current time in milliseconds
 
         try
         {
@@ -247,7 +255,9 @@ class ClientThreads extends Thread
         return allResults;
     }
 }
-
+/*
+* Class used to find the client's thread time
+*/
 class threadTime
 {
 
@@ -260,11 +270,17 @@ class threadTime
         counter = 0;
     }
 
+    /*
+    * pushes values into times array
+    */
     public synchronized void push(long t)
     {
         times[counter++] = t;
     }
 
+    /*
+    * finds and returns averages of times
+    */
     public double getAverage(int num)
     {
         double avg = 0;

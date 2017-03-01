@@ -1,3 +1,12 @@
+/**
+ *
+ * @author Group4
+ * Paul
+ * Brennan Hinck
+ * Molly Johnson
+ * Whitley Turner
+ * Brandon Magaro
+ */
 package nets;
 
 import java.util.*;
@@ -7,9 +16,8 @@ import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 
-/**
- *
- * @author Group4
+/*
+* 
  */
 public class Server
 {
@@ -89,22 +97,13 @@ public class Server
 
                 //Host uptime	
                 case 2:
-                  /*  System.out.printf("Forking thread: Host's uptime%n");
-                    //-----UPTIME
 
-                    RuntimeMXBean mxBean = ManagementFactory.getRuntimeMXBean();
+                    System.out.printf("Forking thread: Server's uptime:%n");
 
-                    out.println("Host uptime: " + mxBean.getUptime());
-
-                   *///----/UPTIME
-                    
-                	System.out.printf("Forking thread: Server's uptime:%n");
-
-                    
                     Process uptimeProcess = Runtime.getRuntime().exec("uptime");
-                    
+
                     //runs the process, gets the ouptut,and prints it on the client side
-                //    someProcess = someRuntime.exec(cmd);
+                    //    someProcess = someRuntime.exec(cmd);
                     stdInp = new BufferedReader(new InputStreamReader(uptimeProcess.getInputStream()));
 
                     //stores the output into a string
@@ -115,21 +114,18 @@ public class Server
 
                     //sends the output to the client
                     out.println(output);
-                    
-                    output="";	//reset output
-                    
+
+                    output = "";	//reset output
+
                     break;
-                	
 
                 //Host memory use					
                 case 3:
                     System.out.printf("Forking thread: Server's memory usage%n");
 
-                    
                     Process memProcess = Runtime.getRuntime().exec("free");
-                    
+
                     //runs the process, gets the ouptut,and prints it on the client side
-                //    someProcess = someRuntime.exec(cmd);
                     stdInp = new BufferedReader(new InputStreamReader(memProcess.getInputStream()));
 
                     //stores the output into a string
@@ -140,17 +136,16 @@ public class Server
 
                     //sends the output to the client
                     out.println(output);
-                    
-                    output="";	//reset output
-                    
-                    break;
-                    
 
-                //Host Netstat					
+                    output = "";	//empties output string
+
+                    break;
+
+                //Find Host Netstat					
                 case 4:
                     System.out.printf("Forking thread: Netstat%n");
 
-                    //runs the process, gets the ouptut,and prints it on the client side
+                    //takes client request, sends command to server, sends output to client as string
                     Process process = Runtime.getRuntime().exec("netstat");
                     BufferedReader bufferedReader = new BufferedReader(
                             new InputStreamReader(process.getInputStream()));
@@ -158,25 +153,24 @@ public class Server
                     //stores the output into a string
                     while ((line = bufferedReader.readLine()) != null)
                     {
-                        output = output +";"+ line;
+                        output = output + ";" + line; //using ; as delimiter
                     }
 
                     //sends the output to the client
                     out.println(output);
 
                     output = "";	//reset output
-                    
+
                     break;
 
                 //Host's current users	
                 case 5:
                     System.out.printf("Forking thread: Server's current users%n");
 
-                   
                     Process userProcess = Runtime.getRuntime().exec("w");
-                    
+
                     //runs the process, gets the ouptut,and prints it on the client side
-                //    someProcess = someRuntime.exec(cmd);
+                    //    someProcess = someRuntime.exec(cmd);
                     stdInp = new BufferedReader(new InputStreamReader(userProcess.getInputStream()));
 
                     //stores the output into a string
@@ -187,9 +181,9 @@ public class Server
 
                     //sends the output to the client
                     out.println(output);
-                    
-                    output="";	//reset output
-                    
+
+                    output = "";	//reset output
+
                     break;
 
                 //Host's running processes	
@@ -213,8 +207,8 @@ public class Server
 
                     //sends the output to the client
                     out.println(output);
-                    
-                    output="";
+
+                    output = "";
                     break;
             }
 
@@ -224,7 +218,7 @@ public class Server
         //prints to the server side that the connection is closed
         System.out.println("Closing connection to client\n");
 
-        //closes the streams and the sockets
+        //closing all of the needed sockets and streams
         out.close();
         in.close();
         clientSocket.close();
@@ -233,4 +227,3 @@ public class Server
     }
 
 }
-
